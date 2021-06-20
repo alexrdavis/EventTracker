@@ -57,7 +57,11 @@ function calculateDate() {
   const pastYear = pastDate.getFullYear();
 
   // Calculate Dates
-  const yearSol = year - pastYear;
+  let yearSol = year - pastYear;
+
+  if(getDate.value == "2021-01-01") {
+    yearSol = 0;
+  }
 
   return yearSol + " Years ";
 }
