@@ -9,6 +9,10 @@ document.querySelector("#date-form").addEventListener("submit", (e) => {
   e.preventDefault();
   if (!getDate || getName.value === "") {
     error.innerHTML = "Please fill in all fields";
+  } else if (getDate.value > 2121) {
+    error.innerHTML = "Please enter lower date";
+  } else if (getDate.value < 1900) {
+    error.innerHTML = "Please enter a valid date";
   } else {
     success();
     form.reset();
