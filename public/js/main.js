@@ -4,7 +4,10 @@ let error = document.querySelector("#error");
 let results = document.querySelector("#results");
 let form = document.querySelector("#date-form");
 
+// Load local storage
+document.addEventListener("DOMContentLoaded", getLocalStorage);
 
+// Validation
 document.querySelector("#date-form").addEventListener("submit", (e) => {
   e.preventDefault();
   if (!getDate || getName.value === "") {
@@ -38,12 +41,15 @@ function success() {
   `
   list.appendChild(row);
 
+  // Local Storage
+  saveLocalEvents(row.innerHTML);
 
 }
 
 // Delete Event
 function deleteItem(el) {
   el.parentElement.parentElement.remove();
+  removeLocalStorage(el.parentElement.parentElement);
 }
 
 
@@ -64,6 +70,54 @@ function calculateDate() {
   }
 
   return yearSol + " Years ";
+}
+
+// Save Local Storage //
+function saveLocalEvents(event) {
+  let events;
+  if(localStorage.getItem("events") === null) {
+    events = [];
+  } else {
+    events = JSON.parse(localStorage.getItem("events"));
+  }
+  events.push(event);
+  localStorage.setItem("events", JSON.stringify(events));
+}
+
+// Get Local Storage //
+function getLocalStorage() {
+  let events;
+  if(localStorage.getItem("events") === null) {
+    events = [];
+  } else {
+    events = JSON.parse(localStorage.getItem("events"));
+    console.log("Get storage" + events);
+  }
+  events.forEach(function(event){
+    const list = document.querySelector("#date-body");
+    const row = document.createElement("tr");
+    // Rows
+    row.innerHTML = event;
+    list.appendChild(row);
+
+
+  })
+}
+
+// Remove Local Storage //
+function removeLocalStorage(event) {
+  let events;
+  if(localStorage.getItem("events") === null) {
+    events = [];
+  } else {
+    events = JSON.parse(localStorage.getItem("events"));
+  }
+  const eventIndex = event.children[0].innerHTML;
+  console.log(eventIndex);
+  let x = events.splice((events.indexOf(eventIndex)-1), 1);
+  console.log(x);
+  console.log("events index" + events.indexOf("alex"));
+  localStorage.setItem("events", JSON.stringify(events));
 }
 
 
