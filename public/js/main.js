@@ -19,8 +19,6 @@ document.querySelector(".table").addEventListener("click", (e) => {
     deleteItem(e.target);
   }); 
 
-document.addEventListener("DOMContentLoaded", getLocalStorage);
-
 function success() {
   // Table
   let list = document.querySelector("#date-body");
